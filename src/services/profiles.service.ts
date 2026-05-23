@@ -14,7 +14,7 @@ export async function upsertProfile(profile: Partial<NewProfile> & { id: string 
     slug: profile.slug ?? null,
   }
 
-  const { data, error } = await supabase.from('profiles').upsert(payload, { returning: 'representation' })
+  const { data, error } = await supabase.from('profiles').upsert(payload, { returning: 'representation' } as any)
   if (error) throw error
   return (data as Profile[] | null)?.[0] ?? null
 }

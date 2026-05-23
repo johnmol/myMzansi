@@ -17,6 +17,10 @@
 	--font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace;
 }
 
+@theme {
+	--color-card: var(--bg-surface);
+}
+
 html, body {
 	background-color: var(--bg-base);
 	color: var(--text-primary);

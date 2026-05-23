@@ -1,13 +1,16 @@
 "use client"
+
+import type { User } from '@supabase/supabase-js'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../lib/supabase'
 import { cn } from '../../lib/utils'
+import DashboardLayout from '../../src/components/dashboard/DashboardLayout'
 
 export default function DashboardPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState<any | null>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -23,18 +26,17 @@ export default function DashboardPage() {
       setUser(user)
 
       // Ensure profile exists
-      try {
-        await supabase.from('profiles').upsert({ id: user.id, email: user.email, created_at: new Date().toISOString() })
-      } catch (err: any) {
-        // ignore if table doesn't exist, but keep error for visibility
-        setError(err?.message || String(err))
+      const { error } = await supabase.from('profiles').upsert({ id: user.id })
+      if (error) {
+        setError(error.message || String(error))
       }
 
       if (mounted) setLoading(false)
     }
     init()
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT') return
       if (!session) router.replace('/login')
     })
 
@@ -47,24 +49,37 @@ export default function DashboardPage() {
   if (loading) return <div className={cn('p-6')}>Loading...</div>
 
   return (
-    <div className={cn('p-6')}>
-      <div className={cn('max-w-3xl')}> 
-        <h1 className={cn('text-2xl font-semibold')}>Dashboard</h1>
-        {user && <p className={cn('mt-4 text-base')}>Welcome, {user.email}</p>}
-        {error && <p className={cn('mt-4')} style={{ color: 'var(--state-error)' }}>{error}</p>}
-        <div className={cn('mt-6')}>
-          <button
-            className={cn('px-4 py-2 rounded-lg')}
-            style={{ backgroundColor: 'var(--bg-surface-raised)', border: '1px solid var(--border-default)' }}
-            onClick={async () => {
-              await supabase.auth.signOut()
-              router.push('/')
-            }}
-          >
-            Sign out
-          </button>
+    <DashboardLayout>
+      <div className={cn('p-6')}>
+        <div className={cn('max-w-3xl')}> 
+          <h1 className={cn('text-2xl font-semibold')}>Dashboard</h1>
+          {user && <p className={cn('mt-4 text-base')}>Welcome, {user.email}</p>}
+          {error && <p className={cn('mt-4')} style={{ color: 'var(--state-error)' }}>{error}</p>}
+
+          <div className={cn('mt-6 grid grid-cols-1 md:grid-cols-2 gap-4')}>
+            <div className={cn('p-4')}>
+              <div className={cn('rounded-lg border p-4')}>
+                <h3 className={cn('font-semibold')}>Complete your profile</h3>
+                <p className={cn('mt-2 text-sm')}>Add a display name, bio, and social links to complete your public profile.</p>
+              </div>
+            </div>
+
+            <div className={cn('p-4')}>
+              <div className={cn('rounded-lg border p-4')}>
+                <h3 className={cn('font-semibold')}>Add your first credential</h3>
+                <p className={cn('mt-2 text-sm')}>Add a certification or certificate to show your qualifications.</p>
+              </div>
+            </div>
+
+            <div className={cn('p-4')}>
+              <div className={cn('rounded-lg border p-4')}>
+                <h3 className={cn('font-semibold')}>Preview public profile</h3>
+                <p className={cn('mt-2 text-sm')}>See how your public profile looks to visitors.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   )
 }

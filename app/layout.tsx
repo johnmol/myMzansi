@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "tailwindcss";
 import { Toaster } from 'react-hot-toast'
 import { cn } from '../lib/utils'
 

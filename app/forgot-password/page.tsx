@@ -26,10 +26,11 @@ export default function ForgotPasswordPage() {
         setMessage('Password reset email sent. Check your inbox.')
         toast.success('Password reset email sent')
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setLoading(false)
-      setError(err?.message || String(err))
-      toast.error(err?.message || String(err))
+      const message = err instanceof Error ? err.message : String(err)
+      setError(message)
+      toast.error(message)
     }
   }
 

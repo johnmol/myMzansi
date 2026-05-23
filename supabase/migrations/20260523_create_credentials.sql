@@ -1,7 +1,7 @@
 -- Create credentials table
 create table if not exists public.credentials (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid references public.profiles(id) on delete cascade,
+  user_id uuid not null references public.profiles(id) on delete cascade,
   title text not null,
   institution_name text not null,
   nqf_level integer,
