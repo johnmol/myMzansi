@@ -19,6 +19,11 @@ change.
 - Added `lucide-react`, `clsx`, `tailwind-merge` to `package.json`
 - Verified dev server starts without import errors
  - Created `README.md` and made initial local commit
+ - Pushed initial commit to remote `origin/main`
+
+- Unit 02: Authentication Setup — Implemented Supabase client, auth pages (`/login`, `/signup`, `/forgot-password`), and client-side protected `dashboard` with profile upsert. Basic verification performed; dev server runs at `http://localhost:3000`.
+
+ - Unit 03: Database Schema & Types — Implemented migrations, TypeScript types, and basic services. RLS policies added in migrations.
 
 ## In Progress
 
@@ -28,6 +33,9 @@ change.
 
 - Integrate components into pages and refine styles to match `globals.css` if needed
  - Push initial commit to remote (requires completing GitHub authentication)
+
+- Implement Supabase auth pages and protected routes per `context/feature-specs/02-authentication.md`
+ - Refine auth page styling to match design system and integrate `cn()` utilities
 
 ## Open Questions
 

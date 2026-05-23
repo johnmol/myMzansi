@@ -2,95 +2,69 @@
 
 ## Approach
 
-Build this project incrementally using a spec-driven workflow. Context files define
-what to build, how to build it, and the current state of progress. Always implement
-against these specs — do not infer or invent behavior from scratch.
+Build this project incrementally using a spec-driven workflow. Context files define what to build, how to build it, and the current state. Always implement exactly against the specs and context — do not infer or add extra features.
 
-Read `project-overview.md` before starting any session to understand the product
-goals and boundaries. Read `architecture.md` before touching any code to understand
-system structure. Read `progress-tracker.md` to know what has been completed and
-what is next. Implement exactly one feature unit per session, verify it works end
-to end, update the relevant docs, and stop.
+Read these files in order before every session:
+1. `project-overview.md`
+2. `architecture.md`
+3. `ui-context.md`
+4. `code-standards.md`
+5. `progress-tracker.md`
+
+Implement **one feature unit at a time**. Verify it works, update progress, then stop.
 
 ## Scoping Rules
 
-- Work on one feature unit at a time
-- Prefer small, verifiable increments over large speculative changes
-- Do not combine unrelated system boundaries in a single implementation step
+- Work on one small, verifiable unit per session
+- Never combine UI + backend changes in the same unit
+- Do not add features that are marked out of scope for v1
+- Prefer simplicity — no premature optimization or extra libraries
 
 ## When to Split Work
 
-Split an implementation step if it combines:
-
-- UI changes and backend/API changes
-- Multiple unrelated API routes or endpoints
-- Database schema changes alongside feature logic
-- Auth logic alongside unrelated feature behavior
-- Behavior not clearly defined in the context files
-
-If a change cannot be verified end to end quickly, the scope is too broad — split it.
+Split if the unit includes:
+- Both frontend and backend changes
+- Multiple unrelated API routes
+- Database schema changes + feature logic
+- Auth flows + unrelated features
 
 ## Handling Missing Requirements
 
-- Do not invent product behavior not defined in the context files
-- If a requirement is ambiguous, resolve it in the relevant context file before
-  implementing
-- If a requirement is missing, add it as an open question in `progress-tracker.md`
-  before continuing
-- Do not assume a feature is needed because it seems logical — if it is not in
-  `project-overview.md` or `architecture.md`, it is out of scope
-
-## File Roles
-
-Each context file has a single responsibility. Do not write information into the
-wrong file:
-
-| File                   | Purpose                                              |
-|------------------------|------------------------------------------------------|
-| `project-overview.md`  | Product goals, features, scope, and success criteria |
-| `architecture.md`      | System structure, data models, API design, tech decisions |
-| `progress-tracker.md`  | Completed units, open questions, what is next        |
-| `ai-workflow-rules.md` | How the agent behaves — never modified during a build session |
+- Do not invent behavior not defined in the context files
+- If something is ambiguous, note it as an open question in `progress-tracker.md` and stop
+- Never add "nice-to-have" features because they seem logical
+- All v1 decisions must stay within the locked scope in `project-overview.md`
 
 ## Protected Files
 
-Do not modify the following unless explicitly instructed:
+Do not modify without explicit instruction:
+- Any context files (`*.md` in root or `context/`)
+- `src/components/ui/*` (shadcn components)
+- Environment files
 
-- `ai-workflow-rules.md` — agent behavior rules are set by the developer, not the agent
-- `components/ui/*` — generated UI library components (shadcn or equivalent)
-- Any installed library internals under `node_modules/`
-- Environment files (`.env`, `.env.local`) — reference them, never overwrite them
+## Code & Architecture Rules
 
-## Code Conventions
+- Follow `architecture.md` invariants strictly
+- Use Supabase UI only for auth flows
+- Keep all business logic in `src/services/`
+- All mutations must go through services
+- Public profile routes must respect `is_public` flag
+- Self-reported credentials only in v1 (`is_verified = false`)
 
-Follow these consistently across the project:
+## Verification Before Completion
 
-- Use TypeScript throughout — no plain `.js` files in `src/`
-- Use named exports for components, not default exports
-- Co-locate component styles using TailwindCSS utility classes — no separate CSS files
-  unless absolutely necessary
-- Keep API route handlers thin — move business logic into service files
-- Use Supabase client only inside server-side code or API routes — never expose it
-  directly in client components
+Before marking a unit complete:
+1. Unit works end-to-end within defined scope
+2. No violations of architecture invariants
+3. `npm run build` passes with no errors
+4. Mobile responsive and matches UI context
+5. `progress-tracker.md` has been updated
+6. No files outside the unit's scope were changed
 
-## Keeping Docs in Sync
+## Progress Tracking
 
-Update the relevant context file whenever implementation changes affect:
+After each unit:
+- Update `progress-tracker.md` with what was completed
+- Log any open questions or decisions made
 
-- System architecture or service boundaries
-- Database schema or storage model decisions
-- New code conventions or patterns introduced
-- Feature scope (anything added, removed, or deferred)
-
-Do not wait until the end of a session to update docs — update as you go.
-
-## Before Moving to the Next Unit
-
-Confirm all of the following before marking a unit complete:
-
-1. The current unit works end to end within its defined scope
-2. No invariant defined in `architecture.md` was violated
-3. `progress-tracker.md` reflects the completed work and is up to date
-4. Any open questions raised during the unit are logged in `progress-tracker.md`
-5. `npm run build` passes with no errors or type errors
-6. No files outside the current unit's scope were modified without a clear reason
+Keep the project focused, simple, and true to the v1 scope.
