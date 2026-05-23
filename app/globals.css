@@ -1,1 +1,50 @@
 @import "tailwindcss";
+
+:root {
+	--bg-base: #F8F9F8;
+	--bg-surface: #FFFFFF;
+	--bg-surface-raised: #F1F5F4;
+	--text-primary: #0F172A;
+	--text-secondary: #334155;
+	--text-muted: #64748B;
+	--accent-primary: #0F766E;
+	--accent-hover: #115E59;
+	--accent-light: #CCFBF1;
+	--border-default: #E2E8F0;
+	--state-error: #EF4444;
+	--state-success: #10B981;
+	--font-ui: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+	--font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace;
+}
+
+@theme {
+	--color-card: var(--bg-surface);
+}
+
+html, body {
+	background-color: var(--bg-base);
+	color: var(--text-primary);
+	font-family: var(--font-ui);
+}
+
+.card {
+	background-color: var(--bg-surface);
+	border: 1px solid var(--border-default);
+}
+
+.link-accent {
+	color: var(--accent-primary);
+}
+
+.btn-primary {
+	background-color: var(--accent-primary);
+	color: white;
+}
+.btn-primary:hover {
+	background-color: var(--accent-hover);
+}
+
+code, kbd, pre, samp {
+	font-family: var(--font-mono);
+}
+

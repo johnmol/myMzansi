@@ -1,140 +1,73 @@
-# MyMzansi Skills
+# MyMzansi Skills - Project Overview
 
 ## Overview
 
-MyMzansi Skills is a South African digital career and credential platform that allows
-individuals to store, verify, and showcase their qualifications, certifications, and
-professional achievements in one trusted place. It serves job seekers, students,
-professionals, employers, and training providers. The platform solves a widespread
-problem in South Africa where qualifications are scattered across physical documents,
-emails, and messaging apps, and where employers face rampant fake credentials and slow
-verification processes. MyMzansi Skills acts as a verified digital career passport —
-combining a CV builder, a certificate wallet, and a talent discovery engine — built
-specifically for the South African education and employment landscape, with support for
-NQF levels, SAQA alignment, and SETA-issued credentials.
+MyMzansi Skills is a simple, practical digital career passport for South Africans. It allows job seekers — especially recent TVET and university graduates as well as working professionals (e.g. in IT) — to create a professional profile, upload their certificates and qualifications, and generate a clean, shareable public profile link. The platform focuses on making credentials trustworthy and easy to present to employers, reducing the friction of scattered documents and qualification doubts.
 
 ## Goals
 
-1. Enable job seekers to build a verified, shareable professional profile backed by
-   real, institution-issued credentials within minutes of signing up.
-2. Allow employers and recruiters to instantly verify candidate qualifications and
-   search for talent by skill, certification, or NQF level without manual back-and-forth.
-3. Provide training providers and institutions with a simple tool to issue tamper-evident
-   digital certificates directly to learner profiles, improving credential trust across
-   the ecosystem.
+1. Enable a user to go from sign-up to having a professional, shareable public profile with credentials in under 10 minutes.
+2. Make credentials visible and credible to employers through clear verified/self-reported status and direct document access.
+3. Provide a clean professional CV PDF export from the user's profile data.
+4. Build a solid, maintainable foundation that can support future employer tools and institution features.
 
-## Core User Flow
+## Core User Flow (Primary User)
 
-### Job Seeker Flow
+1. User lands on home page and clicks "Create Your Profile" → Supabase sign-up (email/password or phone).
+2. Redirected to Dashboard.
+3. Completes basic profile setup (name, headline, location, bio, avatar, experience, skills).
+4. Adds credentials via simple form + file upload.
+5. Previews public profile and toggles visibility.
+6. Copies shareable link and/or downloads CV PDF.
 
-1. User signs up and creates a personal account.
-2. User builds a professional profile with personal details, work experience, and skills.
-3. User uploads existing certificates or receives digital credentials from a registered
-   training provider.
-4. User generates a professional CV from their profile.
-5. User shares a public profile link with employers or applies through the platform.
-6. Employer views profile, verifies credentials, and contacts the candidate.
+## Features (v1)
 
-### Employer Flow
+### Job Seeker / User Features
+- Simple landing page with clear CTA
+- Supabase Auth (sign up, login, password reset)
+- Private Dashboard for editing profile
+- Credential management (add, view, edit, delete)
+- Public profile page with auto-generated URL
+- Basic CV PDF generation and download
+- Profile visibility toggle
 
-1. Employer registers a company account.
-2. Employer searches the candidate pool by skill, certification, or NQF level.
-3. Employer views a candidate's public profile and verifies credentials via verification link.
-4. Employer contacts shortlisted candidates directly.
+### Public Pages
+- Clean public profile (`/profile/[slug]`)
+- Informational employer landing page (`/for-employers`) — static only
 
-### Training Provider Flow
+### Technical Foundations
+- Secure file storage for certificates and avatars
+- Responsive, mobile-first UI
 
-1. Institution registers and submits for platform verification.
-2. Verified institution issues digital certificates to learner profiles.
-3. Institution tracks learner outcomes and showcases successful graduates.
+## In Scope (v1)
 
-## Features
+- Job seeker profile creation and credential wallet
+- Self-uploaded credentials with clear "Self-reported" status
+- Simple public profile sharing
+- Basic one-page CV PDF export
+- Dashboard for personal management
+- Static employer informational page
+- Full mobile responsiveness
 
-### User Profiles
+## Out of Scope (v1)
 
-- User sign-in and route protection
-- Professional profile with personal details, work history, and skills
-- Public shareable profile URL
-- Profile visibility controls (public / private / employers only)
-
-### Credential Management
-
-- Certificate upload (PDF, image)
-- Digital certificate wallet
-- Credential verification links per certificate
-- Verified badge display for institution-issued credentials
-- NQF level tagging on qualifications
-
-### CV Builder
-
-- Auto-generated CV from profile data
-- Downloadable PDF CV
-- Skills and achievement highlights
-
-### Employer Tools
-
-- Candidate search and filtering by skill, certification, or NQF level
-- Candidate profile viewing
-- One-click credential verification
-- Shortlisting and basic contact tools
-
-### Institution Tools
-
-- Institution registration and identity verification
-- Manual digital certificate issuance to learner profiles
-- Learner credential approval workflow
-- Institution public page listing graduates
-
-### Trust & Verification
-
-- Unique verification link per credential
-- Verified institution badges
-- Flagging system for suspicious uploads (manual review)
-
-## Scope
-
-### In Scope
-
-- Web application (desktop and mobile-responsive)
-- Job seeker profile and credential management
-- CV generation and PDF export
-- Employer candidate search and credential verification
-- Training provider certificate issuance
-- Public shareable profile pages
-- Basic admin panel for managing institution verification requests
-
-### Out of Scope
-
-- Native mobile app (iOS / Android)
-- AI-powered CV recommendations or skills gap analysis
-- Skills assessments or built-in testing
-- Learnership or job marketplace (applications, listings)
-- Government or Home Affairs identity verification integration
-- QR code credential scanning
-- Payment processing or subscription billing
-- LinkedIn or third-party OAuth integrations
-- Pan-African or multi-country support
-
-## Tech Stack
-
-| Layer    | Technology                          |
-|----------|-------------------------------------|
-| Frontend | Next.js, TailwindCSS                |
-| Authentication | Supabase                         |
-| Backend  | Supabase (database, APIs, storage)  |
-| Database | PostgreSQL                          |
-| Hosting  | Vercel (frontend), Supabase (backend/services) |
-| Storage  | Supabase Storage (certificates, CVs, Profile files)|
+- Any employer tools (search, filtering, candidate directory)
+- Institution registration or certificate issuance
+- AI analysis or competency scoring
+- Custom profile URLs
+- Advanced profile builder features (recommendations, rich media, etc.)
+- Government integrations (Home Affairs, SAQA, etc.)
+- Payments, subscriptions, or monetization
+- Native mobile apps
+- Job marketplace or applications
+- Social features (connections, endorsements)
 
 ## Success Criteria
 
-1. A job seeker can sign up, build a complete profile, upload a certificate, and share
-   a public profile link — end to end — in under 10 minutes.
-2. An employer can search candidates by skill or certification and verify a credential
-   without leaving the platform.
-3. A registered training provider can issue a digital certificate to a learner profile,
-   and that certificate appears as verified on the learner's public page.
-4. A generated CV PDF accurately reflects a user's profile data and is formatted
-   professionally enough to submit to a real employer.
-5. The platform correctly distinguishes between unverified (user-uploaded) and verified
-   (institution-issued) credentials on every public profile.
+1. A new user can sign up, build a basic profile, add at least one credential with document, and copy a working public profile link — end-to-end — in a single session.
+2. The public profile page loads quickly, looks professional on mobile, and clearly displays credentials with document access.
+3. The generated CV PDF is clean, readable, and contains the key profile + credential information.
+4. All credential data and files are stored securely with proper access controls.
+5. The codebase follows the defined architecture, standards, and invariants with no major tech debt.
+
+---
