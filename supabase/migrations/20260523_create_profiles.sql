@@ -16,12 +16,34 @@ create table if not exists public.profiles (
 alter table public.profiles enable row level security;
 
 -- Allow users to insert/update their own profile (owner = auth.uid())
-create policy "profiles_is_owner" on public.profiles
-  for all
-  using (auth.uid() = id)
-  with check (auth.uid() = id);
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'profiles'
+      and policyname = 'profiles_is_owner'
+  ) then
+    create policy "profiles_is_owner" on public.profiles
+      for all
+      using (auth.uid() = id)
+      with check (auth.uid() = id);
+  end if;
+end $$;
 
 -- Public read for profiles marked as public
-create policy "profiles_public_read" on public.profiles
-  for select
-  using (is_public = true or auth.uid() = id);
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'profiles'
+      and policyname = 'profiles_public_read'
+  ) then
+    create policy "profiles_public_read" on public.profiles
+      for select
+      using (is_public = true or auth.uid() = id);
+  end if;
+end $$;

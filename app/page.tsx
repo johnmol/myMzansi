@@ -13,10 +13,10 @@ export default function Home() {
       >
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
-            Your Verified Career Passport for South Africa
+            Your Digital Career Passport for South Africa
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
-            Store, verify, and share your qualifications and skills in one trusted place.
+            Store, organize, and share your qualifications and skills in one trusted place.
           </p>
           <div className="mt-8 flex justify-center gap-3">
             <Link href="/signup" aria-label="Create Your Profile">

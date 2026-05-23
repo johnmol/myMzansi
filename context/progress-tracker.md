@@ -47,16 +47,17 @@ change.
   - Trust cards accented with `--accent-primary`
   - Verified production build (`npm run build`) succeeds
 
+- Unit 02 patch: Added forgot-password redirect target and implemented `/reset-password` recovery page with password update, recovery-session handling, and post-update sign-out.
+- Unit 05 patch: Hardened dashboard sign-out so redirect only happens after successful `supabase.auth.signOut()` and sign-out failures are surfaced to the user.
+- Unit 03 patch: Updated profile upsert payload construction to include only defined fields so partial profile updates do not clobber existing data.
+- Unit 03 patch: Made the `credentials_is_owner` policy creation idempotent in `20260523_create_credentials.sql` by dropping the policy before recreating it.
+- Unit 03 patch: Made `profiles_is_owner` and `profiles_public_read` idempotent in `20260523_create_profiles.sql` with guarded `DO $$` policy creation blocks.
+
 ## In Progress
- -
+- None
 
 ## Next Up
-
-- Integrate components into pages and refine styles to match `globals.css` if needed
- - Push initial commit to remote (requires completing GitHub authentication)
-
-- Implement Supabase auth pages and protected routes per `context/feature-specs/02-authentication.md`
- - Refine auth page styling to match design system and integrate `cn()` utilities
+- None
 
 ## Open Questions
 

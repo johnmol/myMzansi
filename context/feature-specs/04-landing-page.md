@@ -16,8 +16,8 @@ Create a clean, effective landing page (`/`) that clearly explains the value pro
 
 ### 1. Page Structure (`app/page.tsx`)
 - **Hero Section**
-  - Headline: "Your Verified Career Passport for South Africa"
-  - Subheadline: "Store, verify, and share your qualifications and skills in one trusted place."
+  - Headline: "Your Digital Career Passport for South Africa"
+  - Subheadline: "Store, organize, and share your qualifications and skills in one trusted place."
   - Primary CTA: "Create Your Profile" button → links to `/signup`
   - Secondary link: "For Employers" → `/for-employers`
 

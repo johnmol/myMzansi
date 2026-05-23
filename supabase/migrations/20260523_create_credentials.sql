@@ -14,7 +14,9 @@ create table if not exists public.credentials (
 
 alter table public.credentials enable row level security;
 
-create policy "credentials_is_owner" on public.credentials
+drop policy if exists credentials_is_owner on public.credentials;
+
+create policy credentials_is_owner on public.credentials
   for all
   using (auth.uid() = user_id)
   with check (auth.uid() = user_id);

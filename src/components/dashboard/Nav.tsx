@@ -1,6 +1,5 @@
 "use client"
 
-import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Card } from '../../../components/ui'
@@ -11,6 +10,7 @@ import {
   Briefcase,
   Zap,
   Settings,
+  type LucideIcon,
 } from 'lucide-react'
 import SignOutButton from './SignOutButton'
 
@@ -18,7 +18,7 @@ type NavItem = {
   key: string
   label: string
   href: string
-  Icon: React.ComponentType<any>
+  Icon: LucideIcon
 }
 
 const NAV_ITEMS: NavItem[] = [
