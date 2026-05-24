@@ -23,3 +23,43 @@ export async function getProfileBySlug(slug: string) {
   if (error) throw error
   return data as Profile | null
 }
+
+export async function getPublicProfileBySlug(slug: string) {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('slug', slug)
+    .eq('is_public', true)
+    .maybeSingle()
+
+  if (error) throw error
+  return data as Profile | null
+}
+
+export async function getProfile(userId: string) {
+  const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).maybeSingle()
+  if (error) throw error
+  return data as Profile | null
+}
+
+export async function updateProfile(profile: Partial<NewProfile> & { id: string }) {
+  // If no slug provided, attempt to generate one from full_name or id
+  if (!profile.slug) {
+    const namePart = (profile.full_name ?? '').toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+    profile.slug = `${namePart || 'user'}-${profile.id.slice(0, 8)}`
+  }
+  // delegate to upsertProfile to keep behavior consistent
+  return await upsertProfile(profile)
+}
+
+export async function toggleProfileVisibility(userId: string, isPublic: boolean) {
+  const { data, error } = await supabase
+    .from('profiles')
+    .update({ is_public: isPublic })
+    .eq('id', userId)
+    .select('*')
+    .single()
+
+  if (error) throw error
+  return data as Profile | null
+}

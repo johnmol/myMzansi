@@ -1,0 +1,49 @@
+# Unit 11: Profile Visibility & Share Functionality
+
+## Goal
+
+Add the ability for users to toggle their profile visibility and easily copy their public shareable link from the dashboard.
+
+## Design
+
+- Follow `ui-context.md`
+- Clean toggle switch in the Profile section
+- Prominent "Copy Share Link" button that shows the full public URL
+- Success feedback when link is copied
+- Link only works when `is_public = true`
+
+## Implementation
+
+### 1. Service Update
+- Add to `src/services/profiles.service.ts`:
+  - `toggleProfileVisibility(userId: string, isPublic: boolean)`
+
+### 2. UI Updates
+- In Profile page (`app/dashboard/profile/page.tsx`):
+  - Add visibility toggle (use shadcn Switch if available, or simple button)
+  - Show current public URL (e.g. `https://yoursite.com/profile/john-doe-abc123`)
+  - "Copy Link" button with clipboard functionality
+
+### 3. Integration
+- Update Public Profile page to respect `is_public` flag properly
+- Add visibility status indicator in dashboard
+
+## Dependencies
+
+- None new (or shadcn Switch component if needed)
+
+## Verify when done
+
+- [ ] User can toggle profile between private and public
+- [ ] Public URL is correctly generated and displayed
+- [ ] Copy link button works (copies full URL to clipboard)
+- [ ] Public profile page correctly shows 404/private message when `is_public = false`
+- [ ] Changes persist and work after refresh
+- [ ] Matches UI Context
+- [ ] `npm run build` succeeds
+- Update `progress-tracker.md` and mark Unit 11 complete
+
+**Important Constraints:**
+- Keep it simple — no advanced sharing options
+- Auto-generate slug if not already done
+- No social share buttons yet
