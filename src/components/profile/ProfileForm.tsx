@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Input, Textarea, Card } from '@/components/ui'
 import { supabase } from '@/lib/supabase'
 import type { Profile } from '@/src/types/profile'
@@ -15,11 +15,6 @@ export default function ProfileForm({ initial, onSaved }: Props) {
   const [profile, setProfile] = useState<Partial<Profile>>(initial ?? {})
   const [loading, setLoading] = useState(false)
   const [avatarPreview, setAvatarPreview] = useState<string | null>(initial?.avatar_url ?? null)
-
-  useEffect(() => {
-    setProfile(initial ?? {})
-    setAvatarPreview(initial?.avatar_url ?? null)
-  }, [initial])
 
   async function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]

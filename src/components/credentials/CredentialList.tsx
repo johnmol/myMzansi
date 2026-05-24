@@ -14,6 +14,8 @@ export default function CredentialList() {
   const [editing, setEditing] = useState<Credential | null>(null)
 
   async function fetchCredentials() {
+    // defer setting loading to avoid synchronous setState in mount effect
+    await Promise.resolve()
     setLoading(true)
     try {
       const { data } = await supabase.auth.getUser()
@@ -29,7 +31,11 @@ export default function CredentialList() {
   }
 
   useEffect(() => {
-    fetchCredentials()
+    // Defer calling the fetch so we don't synchronously trigger setState in the effect body.
+    const id = setTimeout(() => {
+      void fetchCredentials()
+    }, 0)
+    return () => clearTimeout(id)
   }, [])
 
   async function handleDelete(id: string) {
@@ -42,7 +48,7 @@ export default function CredentialList() {
     }
   }
 
-  function handleSaved(updated: Credential) {
+  function handleSaved() {
     setShowForm(false)
     setEditing(null)
     fetchCredentials()
@@ -52,7 +58,7 @@ export default function CredentialList() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold">Credentials</h2>
-        <Button onClick={() => setShowForm(true)}>Add New</Button>
+        <Button onClick={() => { setEditing(null); setShowForm(true) }}>Add New</Button>
       </div>
 
       {loading ? (
@@ -86,7 +92,7 @@ export default function CredentialList() {
       )}
 
       {showForm && (
-        <Dialog onClick={() => setShowForm(false)}>
+        <Dialog onClick={() => { setShowForm(false); setEditing(null) }}>
           <DialogContent onClick={(e: React.MouseEvent) => e.stopPropagation()}>
             <CredentialForm initial={editing ?? undefined} onSaved={handleSaved} onCancel={() => { setShowForm(false); setEditing(null) }} />
           </DialogContent>

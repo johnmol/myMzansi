@@ -33,7 +33,9 @@ export async function uploadCertificate(file: File, pathPrefix = ''): Promise<st
     .upload(filePath, file)
 
   if (uploadError) throw uploadError
+  const uploadData = data as { path: string } | null
+  if (!uploadData?.path) throw new Error('Upload did not return a path')
 
-  const urlRes = supabase.storage.from('certificates').getPublicUrl((data as any).path)
-  return (urlRes as any).data.publicUrl
+  const urlRes = supabase.storage.from('certificates').getPublicUrl(uploadData.path)
+  return urlRes.data?.publicUrl ?? ''
 }

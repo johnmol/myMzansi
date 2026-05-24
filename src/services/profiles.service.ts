@@ -15,7 +15,7 @@ export async function upsertProfile(profile: Partial<NewProfile> & { id: string 
 
   const { data, error } = await supabase.from('profiles').upsert(payload).select('*').single()
   if (error) throw error
-  return (data as Profile[] | null)?.[0] ?? null
+  return data as Profile | null
 }
 
 export async function getProfileBySlug(slug: string) {

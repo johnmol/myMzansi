@@ -5,7 +5,7 @@ Update this file after every meaningful implementation
 change.
 
 ## Current Phase
-- MVP v1 Complete
+- Unit 13 In Progress
 
 ## Current Goal
 
@@ -52,11 +52,17 @@ change.
    - Added `app/for-employers/page.tsx` (static informational page)
    - Main landing page contains a link to `/for-employers`
 
- - Completed Unit 13: MVP Validation & Final Polish — added basic 404 and error pages, cleaned up landing/auth/dashboard/profile polish, updated README.md, and verified `npm run build` succeeds
+ - Unit 13 (partial fixes applied):
+   - Fixed unescaped apostrophe in `app/for-employers/page.tsx` copy
+   - Made CV API route return a generic error message and log server-side (`src/app/api/cv/generate/route.ts`)
+   - Fixed `upsertProfile()` return value in `src/services/profiles.service.ts`
+   - Ensured credential creation uses authenticated user id when missing (`src/components/credentials/CredentialForm.tsx`)
+   - Cleared stale editing state for credential modal (`src/components/credentials/CredentialList.tsx`)
+   - Added basic `app/not-found.tsx` and `app/error.tsx`
 
 
 ## In Progress
-
+ - Unit 13: MVP Validation & Final Polish — applying targeted fixes from coderabbitai-comments.md (for-employers copy, CV API error handling, profile upsert fix, credential form user-id fallback, credential modal editing state)
 ## Next Up
 
 ## Open Questions
@@ -78,5 +84,5 @@ change.
  - Started Unit 12: Final Integration & Polish — beginning public profile integration and end-to-end polish per `context/feature-specs/12-final-integration.md`
  - Completed Unit 12: Final Integration & Polish — implemented public profile field display, credential cards with Self-Reported badge and working View Document links, slug auto-generation on profile save, and verified `npm run build` succeeds
  - Started Unit 13: MVP Validation & Final Polish — beginning final validation, polish, and documentation updates per `context/feature-specs/13-mvp-validation.md`
- - Completed Unit 13: MVP Validation & Final Polish — added basic 404 and error pages, cleaned up landing/auth/dashboard/profile polish, updated README.md, and verified `npm run build` succeeds
+ - Applied Unit 13 fixes: for-employers copy, CV API error handling, profile upsert fix, credential form user-id fallback, credential modal editing state; build verified
 

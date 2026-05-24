@@ -118,7 +118,7 @@ export default function ForEmployers() {
         <h3 className="text-center text-2xl font-semibold">Trust Signals</h3>
         <div className="mt-6 max-w-3xl mx-auto text-muted-foreground text-center">
           <p>
-            Profiles prioritise clarity and verifiability. In future releases we'll surface institution verification badges
+            Profiles prioritise clarity and verifiability. In future releases we will surface institution verification badges
             and partner trust marks to further accelerate hiring decisions.
           </p>
         </div>

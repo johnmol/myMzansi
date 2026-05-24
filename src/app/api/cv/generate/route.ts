@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server'
 import { createServerSupabase } from '@/lib/supabase'
-import { getPublicProfileBySlug, getProfile } from '@/src/services/profiles.service'
-import { getCredentialsByUser } from '@/src/services/credentials.service'
 import { generateCVForPublicSlug, generateCVForUserId } from '@/src/services/cv.service'
 
 export async function GET(request: Request) {
@@ -13,7 +11,7 @@ export async function GET(request: Request) {
     if (slug) {
       // public profile CV generation
       const buffer = await generateCVForPublicSlug(slug)
-      return new Response(buffer as any, {
+      return new Response(buffer as unknown as ArrayBuffer, {
         status: 200,
         headers: {
           'Content-Type': 'application/pdf',
@@ -29,14 +27,14 @@ export async function GET(request: Request) {
       const token = authHeader.split(' ')[1]
 
       const supabase = createServerSupabase()
-      const { data: userData, error: userError } = await supabase.auth.getUser(token as any)
+      const { data: userData, error: userError } = await supabase.auth.getUser(token)
       if (userError || !userData?.user) return NextResponse.json({ error: { message: 'Invalid token' } }, { status: 401 })
 
       // Ensure requested userId matches token user
       if (userData.user.id !== userId) return NextResponse.json({ error: { message: 'Forbidden' } }, { status: 403 })
 
       const buffer = await generateCVForUserId(userId)
-      return new Response(buffer as any, {
+      return new Response(buffer as unknown as ArrayBuffer, {
         status: 200,
         headers: {
           'Content-Type': 'application/pdf',
@@ -46,7 +44,10 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.json({ error: { message: 'Missing parameters' } }, { status: 400 })
-  } catch (err: any) {
-    return NextResponse.json({ error: { message: err?.message ?? 'Server error' } }, { status: 500 })
+  } catch (err) {
+    // Log full error server-side, but return a generic message to clients
+    // to avoid leaking internal details.
+    console.error('CV generation error', err)
+    return NextResponse.json({ error: { message: 'Internal server error' } }, { status: 500 })
   }
 }

@@ -1,6 +1,4 @@
 import { pdf } from '@react-pdf/renderer'
-import type { Profile } from '@/src/types/profile'
-import type { Credential } from '@/src/types/credential'
 import { getProfile, getPublicProfileBySlug } from './profiles.service'
 import { getCredentialsByUser } from './credentials.service'
 import { CVDocument } from '@/src/components/cv/CVDocument'

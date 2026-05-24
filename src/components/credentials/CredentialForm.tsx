@@ -1,7 +1,8 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Card, Input } from '@/components/ui'
+import { supabase } from '@/lib/supabase'
 import type { Credential, NewCredential } from '@/src/types/credential'
 import { createCredential, updateCredential, uploadCertificate } from '@/src/services/credentials.service'
 
@@ -12,38 +13,37 @@ type Props = {
 }
 
 export default function CredentialForm({ initial, onSaved, onCancel }: Props) {
-  const [form, setForm] = useState<Partial<NewCredential & { user_id?: string }>>({})
+  const [form, setForm] = useState<Partial<NewCredential & { user_id?: string }>>(() => ({
+    title: initial?.title,
+    institution_name: initial?.institution_name,
+    issue_date: initial?.issue_date,
+    expiry_date: initial?.expiry_date ?? undefined,
+    nqf_level: initial?.nqf_level ?? undefined,
+    file_path: initial?.file_path ?? undefined,
+    user_id: initial?.user_id,
+  }))
   const [file, setFile] = useState<File | null>(null)
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    if (initial) {
-      setForm({
-        title: initial.title,
-        institution_name: initial.institution_name,
-        issue_date: initial.issue_date,
-        expiry_date: initial.expiry_date ?? undefined,
-        nqf_level: initial.nqf_level ?? undefined,
-        file_path: initial.file_path ?? undefined,
-        user_id: initial.user_id,
-      })
-    } else {
-      setForm({})
-      setFile(null)
-    }
-  }, [initial])
 
   async function handleSubmit(e?: React.FormEvent) {
     e?.preventDefault()
     setLoading(true)
     try {
+      // Ensure we have a valid user id (fallback to authenticated user)
+      let userId = form.user_id
+      if (!userId) {
+        const { data } = await supabase.auth.getUser()
+        userId = data.user?.id
+      }
+      if (!userId) throw new Error('Missing user id')
+
       let fileUrl = form.file_path
       if (file) {
-        fileUrl = await uploadCertificate(file, `users/${form.user_id ?? ''}/`)
+        fileUrl = await uploadCertificate(file, `users/${userId}/`)
       }
 
       const payload: NewCredential = {
-        user_id: form.user_id ?? '',
+        user_id: userId,
         title: form.title ?? '',
         institution_name: form.institution_name ?? '',
         issue_date: form.issue_date ?? '',
