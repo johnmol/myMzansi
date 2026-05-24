@@ -37,5 +37,12 @@ export async function uploadCertificate(file: File, pathPrefix = ''): Promise<st
   if (!uploadData?.path) throw new Error('Upload did not return a path')
 
   const urlRes = supabase.storage.from('certificates').getPublicUrl(uploadData.path)
-  return urlRes.data?.publicUrl ?? ''
+  const publicUrl = urlRes.data?.publicUrl
+  if (!publicUrl) {
+    // `getPublicUrl` may not provide a structured error in this SDK surface;
+    // include the whole response to aid debugging.
+    throw new Error(`Failed to get public URL: ${JSON.stringify(urlRes)}`)
+  }
+
+  return publicUrl
 }
