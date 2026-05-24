@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import React from 'react'
 import Nav from './Nav'
 
@@ -9,11 +8,11 @@ type Props = {
 export default function DashboardLayout({ children }: Props) {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex gap-6">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        <div className="flex flex-col gap-6 md:flex-row">
           <Nav />
 
-          <main className="flex-1">
+          <main className="flex-1 pb-24 md:pb-0">
             {children}
           </main>
         </div>

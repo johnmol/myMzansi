@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../lib/supabase'
 import { cn } from '../../lib/utils'
@@ -32,8 +33,6 @@ export default function SignupPage() {
           await upsertProfile({ id: userId, slug, is_public: false })
         }
       } catch (err) {
-        // Non-blocking: log and continue
-        // eslint-disable-next-line no-console
         console.error('Failed to create profile after signup', err)
       }
       router.push('/dashboard')
@@ -66,7 +65,7 @@ export default function SignupPage() {
           </button>
         </form>
         <div className={cn('mt-4 text-sm')}>
-          <a href="/login" className={cn('link-accent')}>Sign in</a>
+          <Link href="/login" className={cn('link-accent')}>Sign in</Link>
         </div>
       </div>
     </div>

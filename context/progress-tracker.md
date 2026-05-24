@@ -1,45 +1,28 @@
+# (Unit 06 completed entry moved below)
 # Progress Tracker
 
 Update this file after every meaningful implementation
 change.
 
 ## Current Phase
--
-- Complete
+- Unit 13 In Progress
 
 ## Current Goal
 
-
 ## Completed
 
-- Planning and task breakdown
-- Added `lib/utils.ts` with `cn()` helper
-- Scaffolded `components/ui/*` primitives (`Button`, `Card`, `Dialog`, `Input`, `Tabs`, `Textarea`, `ScrollArea`)
-- Added `lucide-react`, `clsx`, `tailwind-merge` to `package.json`
-- Verified dev server starts without import errors
  - Created `README.md` and made initial local commit
  - Pushed initial commit to remote `origin/main`
 
-- Unit 02: Authentication Setup — Implemented Supabase client, auth pages (`/login`, `/signup`, `/forgot-password`), and client-side protected `dashboard` with profile upsert. Basic verification performed; dev server runs at `http://localhost:3000`.
-- Unit 02 patch: Updated dashboard profile upsert to use explicit `{ error }` handling and restricted payload to allowed profile fields (`id` only), removing `email`/`created_at` writes.
-- Unit 02 patch: Updated dashboard auth state listener to skip login redirect on `SIGNED_OUT` events so explicit sign-out navigation controls route changes.
-- Unit 01 patch: Added Tailwind v4 `@theme` color token mapping (`--color-card`) to `var(--bg-surface)` so `bg-card` utilities resolve consistently.
-- Unit 01 patch: Removed invalid `import "tailwindcss";` from app layout module and kept Tailwind inclusion via `app/globals.css`.
-- Unit 02 patch: Removed empty-string Supabase env fallbacks and added startup validation for required URL/key before `createClient(...)`.
-- Unit 01 patch: Updated `cn()` to return `twMerge(clsx(...))` and added `tailwind-merge` dependency for Tailwind class conflict resolution.
-- Unit 03 patch: Updated `createCredential` service to use `.single()` and return `Promise<Credential>` for guaranteed typed single-row inserts.
-- Unit 03 patch: Enforced `credentials.user_id` as `NOT NULL` in credentials migrations to guarantee ownership at schema level.
 
  - Unit 03: Database Schema & Types — Implemented migrations, TypeScript types, and basic services. RLS policies added in migrations.
 
-- Unit 05: Dashboard Layout — Polished layout and navigation
   - Implemented `DashboardLayout` with responsive sidebar
   - Added `Nav` with `lucide-react` icons and active-route highlighting
   - Improved mobile bottom navigation and touch targets
   - Added `SignOutButton` client component with loading state
   - Verified dev server and basic dashboard routing at `http://localhost:3000`
 
-- Unit 04: Landing Page — Polished landing page visuals
   - Stronger teal accent on primary CTA and trust signals
   - Subtle hero background using `--bg-surface-raised`
   - Problem/Solution card styling using `Card` and surface tokens
@@ -47,30 +30,59 @@ change.
   - Trust cards accented with `--accent-primary`
   - Verified production build (`npm run build`) succeeds
 
-- Unit 02 patch: Added forgot-password redirect target and implemented `/reset-password` recovery page with password update, recovery-session handling, and post-update sign-out.
-- Unit 05 patch: Hardened dashboard sign-out so redirect only happens after successful `supabase.auth.signOut()` and sign-out failures are surfaced to the user.
-- Unit 03 patch: Updated profile upsert payload construction to include only defined fields so partial profile updates do not clobber existing data.
-- Unit 03 patch: Made the `credentials_is_owner` policy creation idempotent in `20260523_create_credentials.sql` by dropping the policy before recreating it.
-- Unit 03 patch: Made `profiles_is_owner` and `profiles_public_read` idempotent in `20260523_create_profiles.sql` with guarded `DO $$` policy creation blocks.
+
+
+ - Unit 08: Public Profile Page — Implemented public profile route and read-only UI
+   - Added `app/profile/[slug]/page.tsx` (server route that returns 404 when profile is private)
+   - Added `src/components/profile/PublicProfile.tsx` (hero, about, credentials list, view document)
+   - Added `getPublicProfileBySlug()` to `src/services/profiles.service.ts`
+ - Unit 07: Credential Management — Implemented credential CRUD with file upload.
+  - Unit 08: Public Profile Page — Implemented public profile route and read-only UI
+    - Added `app/profile/[slug]/page.tsx` (server route that returns 404 when profile is private)
+    - Added `src/components/profile/PublicProfile.tsx` (hero, about, credentials list, view document)
+    - Added `getPublicProfileBySlug()` to `src/services/profiles.service.ts`
+ - Unit 09: CV PDF Generation — Implemented CV export feature
+   - Added `@react-pdf/renderer` dependency to `package.json`
+   - Created `src/components/cv/CVDocument.tsx` (React-PDF template)
+   - Added `src/services/cv.service.ts` with `generateCVForUserId` and `generateCVForPublicSlug`
+   - Added API route `src/app/api/cv/generate/route.ts` to stream PDF for public slugs and authenticated users
+  - Added `Download CV` buttons on dashboard profile and public profile (`app/dashboard/profile/page.tsx`, `src/components/profile/PublicProfile.tsx`)
+
+ - Unit 10: Employer Informational Page — Added static employer landing page and landing link
+   - Added `app/for-employers/page.tsx` (static informational page)
+   - Main landing page contains a link to `/for-employers`
+
+ - Unit 13 (partial fixes applied):
+   - Fixed unescaped apostrophe in `app/for-employers/page.tsx` copy
+   - Made CV API route return a generic error message and log server-side (`src/app/api/cv/generate/route.ts`)
+   - Fixed `upsertProfile()` return value in `src/services/profiles.service.ts`
+   - Ensured credential creation uses authenticated user id when missing (`src/components/credentials/CredentialForm.tsx`)
+   - Cleared stale editing state for credential modal (`src/components/credentials/CredentialList.tsx`)
+   - Added basic `app/not-found.tsx` and `app/error.tsx`
+
 
 ## In Progress
-- None
-
+ - Unit 13: MVP Validation & Final Polish — applying targeted fixes from coderabbitai-comments.md (for-employers copy, CV API error handling, profile upsert fix, credential form user-id fallback, credential modal editing state)
 ## Next Up
-- None
 
 ## Open Questions
 
-- Confirm whether to include `clsx` and `tailwind-merge` as dependencies for `cn()` merging behavior
-- Confirm exact Tailwind config (if any) — assuming default Tailwind setup from project
 
 ## Architecture Decisions
 
-- [Decisions made that affect the system design or
   data model — include why the decision was made]
 
 ## Session Notes
 
-- Started implementation of design system components per `context/feature-specs/01-design-system.md`
-- Began Unit 04: Landing Page implementation per `context/feature-specs/04-landing-page.md`
+ - Completed Unit 08: Public Profile Page implementation. Created server route, service helper, and read-only UI components for public profiles.
+ - Completed Unit 08: Public Profile Page implementation. Created server route, service helper, and read-only UI components for public profiles.
+ - Completed Unit 09: CV PDF Generation — CV template, service, API route, and UI integration added
+ - Started Unit 10: Employer Informational Page — beginning implementation of `/for-employers` static page
+ - Completed Unit 10: Employer Informational Page — created `app/for-employers/page.tsx` and added link from landing page
+ - Started Unit 11: Profile and Functionality implementation — beginning work per spec `context/feature-specs/11-profile-and-functionality`
+ - Completed Unit 11: Profile Visibility & Share Functionality — implemented visibility toggle, copy-link button, slug auto-generation, and service API; verified `npm run build` succeeds
+ - Started Unit 12: Final Integration & Polish — beginning public profile integration and end-to-end polish per `context/feature-specs/12-final-integration.md`
+ - Completed Unit 12: Final Integration & Polish — implemented public profile field display, credential cards with Self-Reported badge and working View Document links, slug auto-generation on profile save, and verified `npm run build` succeeds
+ - Started Unit 13: MVP Validation & Final Polish — beginning final validation, polish, and documentation updates per `context/feature-specs/13-mvp-validation.md`
+ - Applied Unit 13 fixes: for-employers copy, CV API error handling, profile upsert fix, credential form user-id fallback, credential modal editing state; build verified
 

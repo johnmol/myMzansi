@@ -2,9 +2,11 @@
 
 import type { User } from '@supabase/supabase-js'
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../lib/supabase'
 import { cn } from '../../lib/utils'
+import { Card, CardDescription, CardHeader, CardTitle } from '../../components/ui/card'
 import DashboardLayout from '../../src/components/dashboard/DashboardLayout'
 
 export default function DashboardPage() {
@@ -50,33 +52,39 @@ export default function DashboardPage() {
 
   return (
     <DashboardLayout>
-      <div className={cn('p-6')}>
+      <div className={cn('p-6 pb-28 md:pb-6')}>
         <div className={cn('max-w-3xl')}> 
           <h1 className={cn('text-2xl font-semibold')}>Dashboard</h1>
           {user && <p className={cn('mt-4 text-base')}>Welcome, {user.email}</p>}
           {error && <p className={cn('mt-4')} style={{ color: 'var(--state-error)' }}>{error}</p>}
 
-          <div className={cn('mt-6 grid grid-cols-1 md:grid-cols-2 gap-4')}>
-            <div className={cn('p-4')}>
-              <div className={cn('rounded-lg border p-4')}>
-                <h3 className={cn('font-semibold')}>Complete your profile</h3>
-                <p className={cn('mt-2 text-sm')}>Add a display name, bio, and social links to complete your public profile.</p>
-              </div>
-            </div>
+          <div className={cn('mt-6 grid grid-cols-1 gap-4 md:grid-cols-2')}>
+            <Link href="/dashboard/profile" className="block">
+              <Card className="h-full p-4 transition-colors hover:border-[var(--accent-primary)]">
+                <CardHeader className="p-0">
+                  <CardTitle>Complete your profile</CardTitle>
+                  <CardDescription>Add your name, headline, location, bio, and avatar so your public page feels credible.</CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
 
-            <div className={cn('p-4')}>
-              <div className={cn('rounded-lg border p-4')}>
-                <h3 className={cn('font-semibold')}>Add your first credential</h3>
-                <p className={cn('mt-2 text-sm')}>Add a certification or certificate to show your qualifications.</p>
-              </div>
-            </div>
+            <Link href="/dashboard/credentials" className="block">
+              <Card className="h-full p-4 transition-colors hover:border-[var(--accent-primary)]">
+                <CardHeader className="p-0">
+                  <CardTitle>Add your first credential</CardTitle>
+                  <CardDescription>Upload a qualification document to strengthen your shareable profile.</CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
 
-            <div className={cn('p-4')}>
-              <div className={cn('rounded-lg border p-4')}>
-                <h3 className={cn('font-semibold')}>Preview public profile</h3>
-                <p className={cn('mt-2 text-sm')}>See how your public profile looks to visitors.</p>
-              </div>
-            </div>
+            <Link href="/dashboard/profile" className="block md:col-span-2">
+              <Card className="h-full p-4 transition-colors hover:border-[var(--accent-primary)]">
+                <CardHeader className="p-0">
+                  <CardTitle>Preview your share link</CardTitle>
+                  <CardDescription>Toggle your profile public, copy the link, and review how it appears before sharing it.</CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
           </div>
         </div>
       </div>

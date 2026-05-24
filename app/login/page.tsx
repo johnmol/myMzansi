@@ -1,5 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../lib/supabase'
 import { cn } from '../../lib/utils'
@@ -13,7 +14,6 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    let mounted = true
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) router.replace('/dashboard')
     })
@@ -24,7 +24,6 @@ export default function LoginPage() {
 
     return () => {
       subscription.unsubscribe()
-      mounted = false
     }
   }, [router])
 
@@ -69,7 +68,7 @@ export default function LoginPage() {
           </button>
         </form>
         <div className={cn('mt-4 text-sm')}>
-          <a href="/signup" className={cn('link-accent')}>Create account</a> · <a href="/forgot-password" className={cn('link-accent')}>Forgot password?</a>
+          <Link href="/signup" className={cn('link-accent')}>Create account</Link> · <Link href="/forgot-password" className={cn('link-accent')}>Forgot password?</Link>
         </div>
       </div>
     </div>
