@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import ProfileForm from '@/src/components/profile/ProfileForm'
-import { getProfile, toggleProfileVisibility, updateProfile } from '@/src/services/profiles.service'
+import { getProfile, toggleProfileVisibility, updateProfile, upsertProfile } from '@/src/services/profiles.service'
 import { Card } from '@/components/ui'
 import { Button } from '@/components/ui'
 import DashboardLayout from '@/src/components/dashboard/DashboardLayout'
@@ -14,6 +14,7 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true)
   const [toggling, setToggling] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [loadError, setLoadError] = useState<string | null>(null)
 
   useEffect(() => {
     let mounted = true
@@ -23,8 +24,21 @@ export default function ProfilePage() {
         const { data: userData } = await supabase.auth.getUser()
         const user = userData?.user
         if (!user) return
-        const p = await getProfile(user.id)
-        if (mounted) setProfile(p ?? { id: user.id, is_public: false })
+        const existing = await getProfile(user.id)
+        if (existing) {
+          if (mounted) setProfile(existing)
+          return
+        }
+
+        const created = await upsertProfile({ id: user.id, is_public: false })
+        if (mounted) {
+          if (created) {
+            setProfile(created)
+          } else {
+            console.error('Failed to create profile after dashboard bootstrap', { userId: user.id })
+            setLoadError('Failed to create your profile. Refresh and try again.')
+          }
+        }
       } catch (err) {
         console.error(err)
       } finally {
@@ -64,6 +78,12 @@ export default function ProfilePage() {
   return (
     <DashboardLayout>
       <div className="space-y-4 p-6 pb-28 md:pb-6">
+        {loadError ? (
+          <Card className="border-[var(--state-error)] bg-[var(--state-error)]/10 p-4 text-sm text-[var(--state-error)]">
+            {loadError}
+          </Card>
+        ) : null}
+
         <div className="max-w-3xl space-y-2">
           <h1 className="text-2xl font-semibold">Profile</h1>
           <p className="text-sm text-muted-foreground">Keep your public profile current, then toggle visibility and share it when you are ready.</p>

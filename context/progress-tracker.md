@@ -85,4 +85,10 @@ change.
  - Completed Unit 12: Final Integration & Polish — implemented public profile field display, credential cards with Self-Reported badge and working View Document links, slug auto-generation on profile save, and verified `npm run build` succeeds
  - Started Unit 13: MVP Validation & Final Polish — beginning final validation, polish, and documentation updates per `context/feature-specs/13-mvp-validation.md`
  - Applied Unit 13 fixes: for-employers copy, CV API error handling, profile upsert fix, credential form user-id fallback, credential modal editing state; build verified
+ - Fixed dashboard profile bootstrap to create a real profile row when missing so CV download no longer hits "Profile not found" on first use
+ - Fixed Supabase server client init for CV route to only apply auth options when a token is present, preventing hasOwnProperty crash
+ - Added CV route/service logging and defensive fallbacks for missing profile/credential data; hardened `CVDocument` against nullish props
+ - Fixed Supabase server client init crash separately; the remaining active issue is the react-pdf renderer crash reproduced at `pdf(doc).toBuffer()` with a minimal `CVDocument`
+ - Upgraded `@react-pdf/renderer` to v4.5.1 for React 19 compatibility; production build still passes after the dependency refresh
+ - Re-added the CV template incrementally after the upgrade: hero, about, and credentials sections are restored and build-safe
 
