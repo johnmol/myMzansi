@@ -91,5 +91,10 @@ change.
  - Fixed Supabase server client init crash separately; the remaining active issue is the react-pdf renderer crash reproduced at `pdf(doc).toBuffer()` with a minimal `CVDocument`
  - Upgraded `@react-pdf/renderer` to v4.5.1 for React 19 compatibility; production build still passes after the dependency refresh
  - Re-added the CV template incrementally after the upgrade: hero, about, and credentials sections are restored and build-safe
+<<<<<<< Updated upstream
  - Resolved PR merge conflict by merging `origin/main` into `development` and accepting deletion of `context/current-issues.md`
  
+=======
+ - Upgraded `lucide-react` to `^1.16.0` so the dependency tree is compatible with React 19 and Vercel deployment no longer hits the peer conflict
+
+>>>>>>> Stashed changes
