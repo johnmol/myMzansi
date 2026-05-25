@@ -16,8 +16,19 @@ const supabaseAnonKey = getRequiredEnv(
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-export function createServerSupabase() {
-  return createClient(supabaseUrl, supabaseAnonKey)
+export function createServerSupabase(accessToken?: string) {
+  if (!accessToken) {
+    return createClient(supabaseUrl, supabaseAnonKey)
+  }
+
+  return createClient(supabaseUrl, supabaseAnonKey, {
+    global: { headers: { Authorization: `Bearer ${accessToken}` } },
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+    },
+  })
 }
 
 export default supabase
