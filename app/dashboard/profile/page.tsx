@@ -41,6 +41,9 @@ export default function ProfilePage() {
         }
       } catch (err) {
         console.error(err)
+        if (mounted) {
+          setLoadError(err instanceof Error ? err.message : String(err))
+        }
       } finally {
         if (mounted) setLoading(false)
       }
