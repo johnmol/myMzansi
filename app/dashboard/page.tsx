@@ -15,6 +15,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<User | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split('@')[0] || ''
 
   useEffect(() => {
     let mounted = true
@@ -57,17 +58,32 @@ export default function DashboardPage() {
         <div className={cn('max-w-3xl')}> 
           <div className="bg-[var(--bg-surface-raised)] p-4 rounded-xl">
             <div className="flex items-center justify-between">
-              <h1 className={cn('text-2xl font-semibold')}>{user ? `Welcome back, ${user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0]}` : 'Dashboard'}</h1>
+              <h1 className={cn('text-2xl font-semibold')}>{user ? `Welcome back, ${displayName || 'there'}` : 'Dashboard'}</h1>
               {user && (
                 <div className="ml-4">
                   {user.user_metadata?.avatar_url ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={user.user_metadata.avatar_url} alt="avatar" className="w-10 h-10 rounded-full object-cover" />
+                    <img
+                      src={user.user_metadata.avatar_url}
+                      alt={displayName ? `Profile photo of ${displayName}` : ''}
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
                   ) : (
                     <div className="w-10 h-10 rounded-full bg-[var(--accent-light)] flex items-center justify-center text-sm font-medium text-[var(--accent-primary)]">
                       {(() => {
-                        const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0]
-                        return name.split(' ').map((n: string) => n[0] || '').slice(0,2).join('').toUpperCase()
+                        const name = (displayName || '').trim()
+                        const segments = name.split(/\s+/).filter(Boolean)
+                        const initials = segments
+                          .map((segment: string) => segment.trim()[0] || '')
+                          .filter(Boolean)
+                          .slice(0, 2)
+                          .join('')
+                          .toUpperCase()
+
+                        if (initials) return initials
+
+                        const emailLocalPart = user.email?.split('@')[0]?.trim() || ''
+                        return emailLocalPart ? emailLocalPart[0].toUpperCase() : '?'
                       })()}
                     </div>
                   )}

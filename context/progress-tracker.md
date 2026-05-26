@@ -60,10 +60,10 @@ change.
    - Cleared stale editing state for credential modal (`src/components/credentials/CredentialList.tsx`)
    - Added basic `app/not-found.tsx` and `app/error.tsx`
 
- - Unit 13.2: Dashboard Visual Polish — Polished dashboard hero ("Welcome back, [Name]"), added avatar header, improved action card styling with icons, tighter spacing and subtle dividers; verified `npm run build` succeeds
- - Unit 13.2: Dashboard Visual Polish — Polished dashboard hero ("Welcome back, [Name]") with subtle `--bg-surface-raised` header, added avatar header, improved action card styling: increased padding (`p-6`), left accent border (`border-l-4` using `--accent-primary`), centered icons (Lucide), larger titles (`text-2xl`), refined description typography, `bg-surface` cards with `border-default` and `shadow-sm`; verified `npm run build` succeeds
- - Unit 13.2: Dashboard Visual Polish — Polished dashboard hero ("Welcome back, [Name]") with subtle `--bg-surface-raised` header, added avatar header, improved action card styling: increased padding (`p-6`), left accent border (`border-l-4` using `--accent-primary`), centered icons (Lucide), larger titles (`text-2xl`), refined description typography, `bg-surface` cards with `border-default` and `shadow-sm`; verified `npm run build` succeeds
- - Improved sidebar full-height styling in `src/components/dashboard/DashboardLayout.tsx`: sidebar now uses `md:min-h-screen`, `md:bg-surface`, `md:border-r` with `--border-default` and stretches to full height; mobile bottom nav behavior preserved; verified `npm run build` succeeds
+ - Unit 13.2: Dashboard Visual Polish — polished dashboard hero ("Welcome back, [Name]" with subtle `--bg-surface-raised` header and avatar header), action card styling updates (`p-6` padding, `border-l-4` using `--accent-primary`, centered Lucide icons, `text-2xl` titles, refined description typography, `bg-surface` cards with `border-default` and `shadow-sm`), and sidebar layout improvement in `src/components/dashboard/DashboardLayout.tsx` (`md:min-h-screen`, `md:bg-surface`, `md:border-r` with `--border-default`, full-height stretch while preserving mobile bottom nav); verified `npm run build` succeeds
+ - Fixed dashboard avatar fallback name handling and avatar alt text in `app/dashboard/page.tsx`
+ - Hardened dashboard avatar initials generation to trim, filter empty segments, and fall back safely in `app/dashboard/page.tsx`
+ - Updated `src/components/dashboard/DashboardLayout.tsx` to use Tailwind v4 CSS variable syntax for the sidebar surface and border classes
 
 
 ## In Progress
