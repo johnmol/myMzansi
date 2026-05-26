@@ -7,20 +7,16 @@ type Props = {
 
 export default function DashboardLayout({ children }: Props) {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-6xl px-4 py-4 sm:px-6 lg:px-8 lg:py-6 min-h-screen">
-        <div className="flex flex-col gap-4 md:flex-row md:items-stretch">
-          <div className="md:flex md:flex-col md:w-64 md:shrink-0 md:min-h-screen md:bg-(var(--bg-surface)) md:border-r md:border-(var(--border-default)) md:pr-6">
-            <Nav />
-          </div>
+    <div className="min-h-screen bg-[var(--bg-base)]">
+      <div className="flex flex-col md:flex-row min-h-screen">
+        <Nav />
 
-          <main className="flex-1 pb-16 md:pb-0 md:pl-6 md:border-l md:border-(var(--border-default))">
+        <main className="flex-1 md:max-h-screen md:overflow-y-auto pb-20 md:pb-0">
+          <div className="max-w-5xl mx-auto px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
             {children}
-          </main>
-        </div>
+          </div>
+        </main>
       </div>
-
-      {/* Mobile bottom nav is handled inside Nav component */}
     </div>
   )
 }
