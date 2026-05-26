@@ -60,9 +60,15 @@ change.
    - Cleared stale editing state for credential modal (`src/components/credentials/CredentialList.tsx`)
    - Added basic `app/not-found.tsx` and `app/error.tsx`
 
+ - Unit 13.2: Dashboard Visual Polish — Polished dashboard hero ("Welcome back, [Name]"), added avatar header, improved action card styling with icons, tighter spacing and subtle dividers; verified `npm run build` succeeds
+ - Unit 13.2: Dashboard Visual Polish — Polished dashboard hero ("Welcome back, [Name]") with subtle `--bg-surface-raised` header, added avatar header, improved action card styling: increased padding (`p-6`), left accent border (`border-l-4` using `--accent-primary`), centered icons (Lucide), larger titles (`text-2xl`), refined description typography, `bg-surface` cards with `border-default` and `shadow-sm`; verified `npm run build` succeeds
+ - Unit 13.2: Dashboard Visual Polish — Polished dashboard hero ("Welcome back, [Name]") with subtle `--bg-surface-raised` header, added avatar header, improved action card styling: increased padding (`p-6`), left accent border (`border-l-4` using `--accent-primary`), centered icons (Lucide), larger titles (`text-2xl`), refined description typography, `bg-surface` cards with `border-default` and `shadow-sm`; verified `npm run build` succeeds
+ - Improved sidebar full-height styling in `src/components/dashboard/DashboardLayout.tsx`: sidebar now uses `md:min-h-screen`, `md:bg-surface`, `md:border-r` with `--border-default` and stretches to full height; mobile bottom nav behavior preserved; verified `npm run build` succeeds
+
 
 ## In Progress
  - Unit 13: MVP Validation & Final Polish — applying targeted fixes from coderabbitai-comments.md (for-employers copy, CV API error handling, profile upsert fix, credential form user-id fallback, credential modal editing state)
+ - Unit 13.2: Dashboard Visual Polish — implementing polish per spec (`app/dashboard/page.tsx`, `DashboardLayout.tsx`)
 ## Next Up
 
 ## Open Questions
