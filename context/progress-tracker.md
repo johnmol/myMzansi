@@ -64,6 +64,7 @@ change.
  - Fixed dashboard avatar fallback name handling and avatar alt text in `app/dashboard/page.tsx`
  - Hardened dashboard avatar initials generation to trim, filter empty segments, and fall back safely in `app/dashboard/page.tsx`
  - Updated `src/components/dashboard/DashboardLayout.tsx` to use Tailwind v4 CSS variable syntax for the sidebar surface and border classes
+ - Reworked `AGENTS.md` startup instructions to reduce cognitive load and resolve context precedence/ordering ambiguities
 
 
 ## In Progress
