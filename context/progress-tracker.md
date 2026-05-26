@@ -60,9 +60,16 @@ change.
    - Cleared stale editing state for credential modal (`src/components/credentials/CredentialList.tsx`)
    - Added basic `app/not-found.tsx` and `app/error.tsx`
 
+ - Unit 13.2: Dashboard Visual Polish — polished dashboard hero ("Welcome back, [Name]" with subtle `--bg-surface-raised` header and avatar header), action card styling updates (`p-6` padding, `border-l-4` using `--accent-primary`, centered Lucide icons, `text-2xl` titles, refined description typography, `bg-surface` cards with `border-default` and `shadow-sm`), and sidebar layout improvement in `src/components/dashboard/DashboardLayout.tsx` (`md:min-h-screen`, `md:bg-surface`, `md:border-r` with `--border-default`, full-height stretch while preserving mobile bottom nav); verified `npm run build` succeeds
+ - Fixed dashboard avatar fallback name handling and avatar alt text in `app/dashboard/page.tsx`
+ - Hardened dashboard avatar initials generation to trim, filter empty segments, and fall back safely in `app/dashboard/page.tsx`
+ - Updated `src/components/dashboard/DashboardLayout.tsx` to use Tailwind v4 CSS variable syntax for the sidebar surface and border classes
+ - Reworked `AGENTS.md` startup instructions to reduce cognitive load and resolve context precedence/ordering ambiguities
+
 
 ## In Progress
  - Unit 13: MVP Validation & Final Polish — applying targeted fixes from coderabbitai-comments.md (for-employers copy, CV API error handling, profile upsert fix, credential form user-id fallback, credential modal editing state)
+ - Unit 13.2: Dashboard Visual Polish — implementing polish per spec (`app/dashboard/page.tsx`, `DashboardLayout.tsx`)
 ## Next Up
 
 ## Open Questions
