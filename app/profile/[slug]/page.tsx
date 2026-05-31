@@ -5,11 +5,11 @@ import { getPublicProfileBySlug } from '@/src/services/profiles.service'
 import { getCredentialsByUser } from '@/src/services/credentials.service'
 
 type Props = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export default async function Page({ params }: Props) {
-  const { slug } = params
+  const { slug } = await params
   const profile = await getPublicProfileBySlug(slug)
   if (!profile) return notFound()
 
